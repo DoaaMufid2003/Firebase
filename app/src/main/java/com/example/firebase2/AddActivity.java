@@ -35,16 +35,7 @@ FirebaseFirestore firestore;
         binding=ActivityAddBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         firestore=FirebaseFirestore.getInstance();
-        Map<String, Object> docData = new HashMap<>();
-        docData.put("Expressions",binding.etExpressions.getText().toString());
-        firestore.collection("Category")
-                .document(MainActivity.categoryNames)
-                .addSnapshotListener(new EventListener<DocumentSnapshot>() {
-                    @Override
-                    public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
-                        value.getData().put("ExpressionsName",binding.etExpressions.getText().toString());
-                    }
-                });
+
 
 
 
@@ -53,8 +44,17 @@ FirebaseFirestore firestore;
             @Override
             public void onClick(View v) {
 //                list.add(binding.etExpressions.getText().toString());
-                Intent intent=new Intent(getBaseContext(),ExpressionActivity.class);
-                startActivity(intent);
+                Map<String, Object> docData = new HashMap<>();
+                docData.put("Expressions",binding.etExpressions.getText().toString());
+                firestore.collection("Category")
+                        .document(MainActivity.categoryNames)
+                        .addSnapshotListener(new EventListener<DocumentSnapshot>() {
+                            @Override
+                            public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
+                                value.getData().put("ExpressionsName",binding.etExpressions.getText().toString());
+                            }
+                        });
+                startActivity(new Intent(getBaseContext(),ExpressionActivity.class));
             }
         });
 

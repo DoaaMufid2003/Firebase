@@ -19,13 +19,13 @@ import com.google.firebase.storage.StorageReference;
 import java.util.List;
 
 public class AdapterImage  extends RecyclerView.Adapter<AdapterImage.MyViewHolder> {
-    List<StorageReference> list;
+    List<String> list;
     Context context;
 
 
 
 
-    public AdapterImage(List<StorageReference> list, Context context) {
+    public AdapterImage(List<String> list, Context context) {
         this.list = list;
         this.context = context;
 
