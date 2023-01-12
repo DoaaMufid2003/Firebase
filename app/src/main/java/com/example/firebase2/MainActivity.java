@@ -44,6 +44,13 @@ public class MainActivity extends AppCompatActivity {
                             categoryNames = categoryName;
                             startActivity(intent);
                         }
+
+                        @Override
+                        public void onClickImage(String categoryName) {
+                            Intent intent=new Intent(getApplicationContext(),ImegesActivity.class);
+                            intent.putExtra("categoryNametoImage",categoryName);
+                            startActivity(intent);
+                        }
                     });
                     binding.rv.setAdapter(adapterCategory);
                     binding.rv.setLayoutManager(new LinearLayoutManager(getApplicationContext(), RecyclerView.VERTICAL, false));
@@ -53,5 +60,6 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
+
 
 }

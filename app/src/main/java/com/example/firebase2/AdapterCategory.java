@@ -36,6 +36,7 @@ public class AdapterCategory extends RecyclerView.Adapter<AdapterCategory.MyView
         ItemCategoryBinding binding = ItemCategoryBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false);
         return new MyViewHolder(binding);
 
+
     }
 
 
@@ -47,6 +48,12 @@ public class AdapterCategory extends RecyclerView.Adapter<AdapterCategory.MyView
             @Override
             public void onClick(View v) {
                 listener.onClick(holder.category_name.getText().toString());
+            }
+        });
+        holder.imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                listener.onClickImage(holder.category_name.getText().toString());
             }
         });
 
