@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -18,12 +19,15 @@ import java.util.List;
 public class ExpressionAdapter  extends RecyclerView.Adapter<ExpressionAdapter.MyViewHolder> {
     List<String> expressions;
     Context context;
+    boolean isfavarite;
+    ListenerFavarite listenerFavarite;
 
 
 
-    public ExpressionAdapter(List<String> expressions, Context context) {
+    public ExpressionAdapter(List<String> expressions, Context context,ListenerFavarite listenerFavarite) {
         this.expressions = expressions;
         this.context = context;
+       this.listenerFavarite=listenerFavarite;
 
     }
 
@@ -41,6 +45,20 @@ public class ExpressionAdapter  extends RecyclerView.Adapter<ExpressionAdapter.M
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         int pos = position;
         holder.expressions.setText(expressions.get(pos).toString());
+        holder.img_favarite.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(isfavarite){
+                    holder.img_favarite.setImageResource(R.drawable.un_favorite);
+                 listenerFavarite.unfavarite();
+
+                }else{
+                    holder.img_favarite.setImageResource(R.drawable.ic_baseline_favorite_24);
+                   listenerFavarite.favarite();;
+                }
+                isfavarite=!isfavarite;
+            }
+        });
 
     }
 
@@ -52,10 +70,13 @@ public class ExpressionAdapter  extends RecyclerView.Adapter<ExpressionAdapter.M
 
     class MyViewHolder extends RecyclerView.ViewHolder{
         TextView expressions;
+        ImageView img_favarite;
 
         public MyViewHolder(@NonNull ItemExpressionBinding binding) {
             super(binding.getRoot());
             expressions=binding.tvExpressions;
+            img_favarite=binding.imgFavarite;
+
         }
 
     }

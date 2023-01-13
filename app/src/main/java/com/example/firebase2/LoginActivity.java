@@ -18,72 +18,82 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 public class LoginActivity extends AppCompatActivity {
-ActivityLoginBinding binding;
+    ActivityLoginBinding binding;
     public FirebaseAuth auth;
     public FirebaseUser currentUser;
+
     @Override
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding=ActivityLoginBinding.inflate(getLayoutInflater());
+        binding = ActivityLoginBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         auth = FirebaseAuth.getInstance();
-        currentUser=auth.getCurrentUser();
+        currentUser = auth.getCurrentUser();
+        binding.btnRegistar.setVisibility(View.GONE);
 
-        if(currentUser !=null){
-            startActivity(new Intent(getApplicationContext(),MainActivity.class));
-        }
-        binding.button.setOnClickListener(new View.OnClickListener() {
+
+//        if(currentUser !=null){
+//            startActivity(new Intent(getApplicationContext(),MainActivity.class));
+//        }
+        binding.tvRegistar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                binding.btnLogin.setVisibility(View.GONE);
+                binding.btnRegistar.setVisibility(View.VISIBLE);
+            }
+        });
+        binding.btnRegistar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 register();
             }
         });
 
-        binding.login.setOnClickListener(new View.OnClickListener() {
+        binding.btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 login();
             }
         });
     }
-    private void register() {
-        String email = binding.editTextTextEmailAddress.getText().toString();
-        String password = binding.editTextTextPassword.getText().toString();
-        auth.createUserWithEmailAndPassword(email,password)
+
+    private void login() {
+        String email = binding.etEmail.getText().toString();
+        String password = binding.etPassword.getText().toString();
+        if (email==null || password==null) {
+            Toast.makeText(this, "please,Enter The Email and Password", Toast.LENGTH_SHORT).show();
+        }
+        auth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
-                        // try {
-                        if(task.isSuccessful()){
-                            Log.d("LoginActivity",task.getResult().getUser().toString());
-                            startActivity(new Intent(getApplicationContext(),MainActivity.class));
-
-                        }else{
-                            Log.d("LoginActivity",task.getException().getMessage());
+                        if (task.isSuccessful()) {
+                            Log.d("LoginActivity", task.getResult().getUser().toString());
+                            startActivity(new Intent(getApplicationContext(), ExpressionActivity.class));
+                        } else {
+                            Log.d("LoginActivity", task.getException().getMessage());
                             Toast.makeText(getApplicationContext(), task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                         }
-                        // }catch (Exception ex){
-                        // ex.printStackTrace();
-                        // }
-                        //else{
                     }
                     // }
                 });
     }
-    private void login() {
-        String email = binding.editTextTextEmailAddress.getText().toString();
-        String password = binding.editTextTextPassword.getText().toString();
-        auth.signInWithEmailAndPassword(email,password)
+
+    private void register() {
+        String email = binding.etEmail.getText().toString();
+        String password = binding.etPassword.getText().toString();
+        auth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         // try {
-                        if(task.isSuccessful()){
-                            Log.d("LoginActivity",task.getResult().getUser().toString());
-                            startActivity(new Intent(getApplicationContext(),MainActivity.class));
-                        }else{
-                            Log.d("LoginActivity",task.getException().getMessage());
+                        if (task.isSuccessful()) {
+                            Log.d("LoginActivity", task.getResult().getUser().toString());
+                            startActivity(new Intent(getApplicationContext(), ExpressionActivity.class));
+
+                        } else {
+                            Log.d("LoginActivity", task.getException().getMessage());
                             Toast.makeText(getApplicationContext(), task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                         }
                         // }catch (Exception ex){

@@ -10,6 +10,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Firebase2">
         <activity
+            android:name=".RegistarActivity"
+            android:exported="false" />
+        <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
