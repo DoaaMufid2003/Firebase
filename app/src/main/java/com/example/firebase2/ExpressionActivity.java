@@ -20,12 +20,14 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -37,23 +39,16 @@ public class ExpressionActivity extends AppCompatActivity {
     public FirebaseUser currentUser;
     SharedPreferences sp;
     SharedPreferences.Editor editor;
+    FirebaseDatabase database;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityExpressionBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-        sp = getSharedPreferences("sp", MODE_PRIVATE);
-        editor = sp.edit();
-        editor.putString("categoryName", getIntent().getStringExtra("categoryName"));
-        editor.apply();
+        database = FirebaseDatabase.getInstance();
         auth = FirebaseAuth.getInstance();
         currentUser = auth.getCurrentUser();
-        SharedPreferences sharedPreferences = getSharedPreferences("sp", MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-
-        name = sharedPreferences.getString("categoryName", null);
-        editor.apply();
 
         firestore = FirebaseFirestore.getInstance();
         //    Log.d("categoryname",getIntent().getStringExtra("categoryName"));
@@ -68,9 +63,18 @@ public class ExpressionActivity extends AppCompatActivity {
                             List<String> list = (List<String>) document.get("array");
                             ExpressionAdapter adapter = new ExpressionAdapter(list, getBaseContext(), new ListenerFavarite() {
                                 @Override
-                                public void favarite() {
+                                public void favarite(String expression) {
                                     if (currentUser == null) {
+                                       ArrayList <String> list1=new ArrayList<>();
+                                       list1.add(expression);
                                         startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+                                        database.getReference().child(currentUser.getUid()).setValue(list1).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                            @Override
+                                            public void onSuccess(Void unused) {
+                                                Toast.makeText(ExpressionActivity.this, "Added Successful", Toast.LENGTH_SHORT).show();
+                                                Log.d("expression",expression);
+                                            }
+                                        });
 //                                        firestore.collection("Fevarite").add(currentUser.getUid()).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
 //                                            @Override
 //                                            public void onSuccess(DocumentReference documentReference) {
@@ -94,6 +98,14 @@ public class ExpressionActivity extends AppCompatActivity {
                         }
                     }
                 });
+        binding.imgLogout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FirebaseAuth.getInstance().signOut();
+                Intent intent = new Intent(getBaseContext(), LoginActivity.class);
+                startActivity(intent);
+            }
+        });
 
     }
 

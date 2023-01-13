@@ -1,6 +1,6 @@
 package com.example.firebase2;
 
 public interface ListenerFavarite {
-void favarite();
+void favarite(String expression);
 void unfavarite();
 }

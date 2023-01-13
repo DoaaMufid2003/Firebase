@@ -54,7 +54,7 @@ public class ExpressionAdapter  extends RecyclerView.Adapter<ExpressionAdapter.M
 
                 }else{
                     holder.img_favarite.setImageResource(R.drawable.ic_baseline_favorite_24);
-                   listenerFavarite.favarite();;
+                   listenerFavarite.favarite(holder.expressions.getText().toString());
                 }
                 isfavarite=!isfavarite;
             }
