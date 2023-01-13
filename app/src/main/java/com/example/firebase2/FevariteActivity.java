@@ -42,23 +42,24 @@ public class FevariteActivity extends AppCompatActivity {
         databaseReference.getReference(currentUser.getUid());
 
         //listen to the events come
-        databaseReference.addValueEventListener(new ValueEventListener() {
-            @SuppressLint("RestrictedApi")
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
+//        databaseReference.addValueEventListener(new ValueEventListener() {
+//            @SuppressLint("RestrictedApi")
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot snapshot) {
+//
+//                for (DataSnapshot dataSnapshot: snapshot.getChildren()) {
+//                     Category category = dataSnapshot.getValue(Category.class);
+//                     ArrayList<String> list=new ArrayList<>() ;
+//              //      list.add(category)
+//                }
+//           //     adapter.notifyDataSetChanged();
+//            }
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError error) {
+//              //  Toast.makeText(getActivity(),"no data",Toast.LENGTH_LONG).show();
+//                Log.e("error","error");
+//            }
+//        });
 
-                for (DataSnapshot dataSnapshot: snapshot.getChildren()) {
-                     Category category = dataSnapshot.getValue(Category.class);
-                     ArrayList<String> list=new ArrayList<>() ;
-                    list.add(category)
-                }
-                adapter.notifyDataSetChanged();
-            }
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-              //  Toast.makeText(getActivity(),"no data",Toast.LENGTH_LONG).show();
-                Log.e("error","error");
-            }
-        });
-
+    }
 }
