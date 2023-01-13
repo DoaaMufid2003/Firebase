@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 
 import com.example.firebase2.Model.Category;
 import com.example.firebase2.databinding.ActivityMainBinding;
@@ -55,6 +56,13 @@ public class MainActivity extends AppCompatActivity {
                     binding.rv.setAdapter(adapterCategory);
                     binding.rv.setLayoutManager(new LinearLayoutManager(getApplicationContext(), RecyclerView.VERTICAL, false));
                 }
+            }
+        });
+        binding.imgFeva.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(getBaseContext(),FevariteActivity.class);
+                startActivity(intent);
             }
         });
 

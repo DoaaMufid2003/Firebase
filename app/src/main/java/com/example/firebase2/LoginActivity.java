@@ -1,11 +1,18 @@
 package com.example.firebase2;
 
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
@@ -16,6 +23,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserProfileChangeRequest;
 
 public class LoginActivity extends AppCompatActivity {
     ActivityLoginBinding binding;
@@ -28,11 +36,24 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityLoginBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
         auth = FirebaseAuth.getInstance();
         currentUser = auth.getCurrentUser();
         binding.btnRegistar.setVisibility(View.GONE);
+        binding.etName.setVisibility(View.GONE);
+        binding.img.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Intent.ACTION_PICK,
+                        MediaStore.Images.Media.INTERNAL_CONTENT_URI);
+                startActivityForResult(intent,3);
 
-
+            }
+        });
+//        UserProfileChangeRequest profileChangeRequest=new UserProfileChangeRequest.Builder()
+//                .setDisplayName(binding.etName.getText().toString())
+//                .setPhotoUri()
+//                .build();
 //        if(currentUser !=null){
 //            startActivity(new Intent(getApplicationContext(),MainActivity.class));
 //        }
@@ -41,6 +62,7 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View v) {
                 binding.btnLogin.setVisibility(View.GONE);
                 binding.btnRegistar.setVisibility(View.VISIBLE);
+                binding.etName.setVisibility(View.VISIBLE);
             }
         });
         binding.btnRegistar.setOnClickListener(new View.OnClickListener() {
@@ -58,7 +80,7 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
-    private void login() {
+    public boolean login() {
         String email = binding.etEmail.getText().toString();
         String password = binding.etPassword.getText().toString();
         if (email==null || password==null) {
@@ -78,9 +100,10 @@ public class LoginActivity extends AppCompatActivity {
                     }
                     // }
                 });
+        return true;
     }
 
-    private void register() {
+    public void register() {
         String email = binding.etEmail.getText().toString();
         String password = binding.etPassword.getText().toString();
         auth.createUserWithEmailAndPassword(email, password)
@@ -103,5 +126,14 @@ public class LoginActivity extends AppCompatActivity {
                     }
                     // }
                 });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+
+        if (requestCode==RESULT_OK&&data !=null){
+            Uri selectedImage=data.getData();
+            binding.img.setImageURI(selectedImage);
+        }
     }
 }

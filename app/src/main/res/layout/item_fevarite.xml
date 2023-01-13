@@ -6,14 +6,6 @@
     android:layout_height="wrap_content"
     android:background="#7A8CF1">
 
-    <ImageView
-        android:id="@+id/img_favarite"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_expressions"
-        app:srcCompat="@drawable/un_favorite" />
-
     <TextView
         android:id="@+id/tv_expressions"
         android:layout_width="match_parent"
