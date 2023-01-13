@@ -20,9 +20,7 @@ public class AdapterCategory extends RecyclerView.Adapter<AdapterCategory.MyView
     List<Category> categories;
     Context context;
     Listener listener;
-    boolean isfavarite=false;
-
-
+    boolean isfavarite = false;
 
 
     public AdapterCategory(List<Category> categories, Context context, Listener listener) {
@@ -61,15 +59,13 @@ public class AdapterCategory extends RecyclerView.Adapter<AdapterCategory.MyView
         holder.img_favarite.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                if (holder.img_favarite.isClickable()==isfavarite){
+                if(isfavarite){
                     holder.img_favarite.setImageResource(R.drawable.un_favorite);
-                   isfavarite=true;
-                }
-                else if (holder.img_favarite.isClickable()==isfavarite){
+
+                }else{
                     holder.img_favarite.setImageResource(R.drawable.ic_baseline_favorite_24);
-                    isfavarite=false;
                 }
+                isfavarite=!isfavarite;
             }
         });
 
@@ -83,7 +79,7 @@ public class AdapterCategory extends RecyclerView.Adapter<AdapterCategory.MyView
 
     class MyViewHolder extends RecyclerView.ViewHolder {
         TextView category_name;
-        ImageView imageView,img_favarite;
+        ImageView imageView, img_favarite;
 
 
         public MyViewHolder(@NonNull ItemCategoryBinding binding) {
@@ -91,7 +87,7 @@ public class AdapterCategory extends RecyclerView.Adapter<AdapterCategory.MyView
 
             category_name = binding.tvCategory;
             imageView = binding.imageView;
-            img_favarite=binding.imgFavarite;
+            img_favarite = binding.imgFavarite;
 
 
         }
