@@ -71,12 +71,12 @@ public class ExpressionActivity extends AppCompatActivity {
                                 public void favarite() {
                                     if (currentUser == null) {
                                         startActivity(new Intent(getApplicationContext(), LoginActivity.class));
-                                        firestore.collection("Fevarite").add(currentUser.getUid()).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                                            @Override
-                                            public void onSuccess(DocumentReference documentReference) {
-
-                                            }
-                                        });
+//                                        firestore.collection("Fevarite").add(currentUser.getUid()).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+//                                            @Override
+//                                            public void onSuccess(DocumentReference documentReference) {
+//
+//                                            }
+//                                        });
                                     } else {
                                         return;
                                     }
