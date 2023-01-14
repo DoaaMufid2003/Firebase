@@ -25,6 +25,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -88,7 +89,7 @@ public class ExpressionActivity extends AppCompatActivity {
                                 }
 
                                 @Override
-                                public void unfavarite() {
+                                public void unfavarite(String expression) {
 
                                 }
                             });
@@ -104,7 +105,7 @@ public class ExpressionActivity extends AppCompatActivity {
         binding.imgLogout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FirebaseAuth.getInstance().signOut();
+               auth.signOut();
                 Intent intent = new Intent(getBaseContext(), LoginActivity.class);
                 startActivity(intent);
             }

@@ -48,15 +48,10 @@ public class ExpressionAdapter  extends RecyclerView.Adapter<ExpressionAdapter.M
         holder.img_favarite.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(isfavarite){
-                    holder.img_favarite.setImageResource(R.drawable.un_favorite);
-                 listenerFavarite.unfavarite();
 
-                }else{
                     holder.img_favarite.setImageResource(R.drawable.ic_baseline_favorite_24);
                    listenerFavarite.favarite(holder.expressions.getText().toString());
-                }
-                isfavarite=!isfavarite;
+
             }
         });
 

@@ -7,6 +7,7 @@
         <entry key="app/src/main/res/drawable/ic_baseline_add_24.xml" value="0.2235" />
         <entry key="app/src/main/res/drawable/ic_baseline_favorite_24.xml" value="0.2235" />
         <entry key="app/src/main/res/drawable/ic_baseline_logout_24.xml" value="0.2235" />
+        <entry key="app/src/main/res/drawable/ic_baseline_person_24.xml" value="0.2235" />
         <entry key="app/src/main/res/drawable/ic_menu_gallery.xml" value="0.2235" />
         <entry key="app/src/main/res/drawable/shape_item_expression.xml" value="0.2235" />
         <entry key="app/src/main/res/drawable/un_favorite.xml" value="0.2235" />
@@ -16,6 +17,7 @@
         <entry key="app/src/main/res/layout/activity_imeges.xml" value="0.24791666666666667" />
         <entry key="app/src/main/res/layout/activity_login.xml" value="0.24583333333333332" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.24583333333333332" />
+        <entry key="app/src/main/res/layout/activity_profile.xml" value="0.2328125" />
         <entry key="app/src/main/res/layout/activity_registar.xml" value="0.2328125" />
         <entry key="app/src/main/res/layout/fragment_first.xml" value="0.24583333333333332" />
         <entry key="app/src/main/res/layout/fragment_second.xml" value="0.24583333333333332" />

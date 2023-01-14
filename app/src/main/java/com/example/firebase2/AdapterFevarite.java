@@ -18,13 +18,14 @@ import java.util.List;
 public class AdapterFevarite extends RecyclerView.Adapter<AdapterFevarite.MyViewHolder> {
     List<String> expressions;
     Context context;
+    ListenerFavarite listenerFavarite;
+    boolean isfavarite = false;
 
 
-
-
-    public AdapterFevarite(List<String> expressions, Context context) {
+    public AdapterFevarite(List<String> expressions, Context context, ListenerFavarite listenerFavarite) {
         this.expressions = expressions;
         this.context = context;
+        this.listenerFavarite=listenerFavarite;
 
 
     }
@@ -32,17 +33,27 @@ public class AdapterFevarite extends RecyclerView.Adapter<AdapterFevarite.MyView
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        ItemFevariteBinding binding=ItemFevariteBinding.inflate(LayoutInflater.from(parent.getContext()),parent,false);
+        ItemFevariteBinding binding = ItemFevariteBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false);
         return new MyViewHolder(binding);
 
     }
-
 
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         int pos = position;
         holder.expressions.setText(expressions.get(pos).toString());
+        holder.imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (isfavarite==false) {
+                    listenerFavarite.unfavarite(holder.expressions.getText().toString());
+                    holder.imageView.setImageResource(R.drawable.un_favorite);
+
+                }
+
+            }
+        });
 
     }
 
@@ -52,13 +63,15 @@ public class AdapterFevarite extends RecyclerView.Adapter<AdapterFevarite.MyView
         return expressions.size();
     }
 
-    class MyViewHolder extends RecyclerView.ViewHolder{
+    class MyViewHolder extends RecyclerView.ViewHolder {
         TextView expressions;
+        ImageView imageView;
 
 
-            public MyViewHolder(@NonNull ItemFevariteBinding binding) {
+        public MyViewHolder(@NonNull ItemFevariteBinding binding) {
             super(binding.getRoot());
-            expressions=binding.tvExpressions;
+            expressions = binding.tvExpressions;
+            imageView = binding.img;
 
 
         }

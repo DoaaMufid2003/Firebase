@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -25,10 +26,14 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
 
+import java.io.FileNotFoundException;
+import java.io.InputStream;
+
 public class LoginActivity extends AppCompatActivity {
     ActivityLoginBinding binding;
     public FirebaseAuth auth;
     public FirebaseUser currentUser;
+
 
     @Override
 
@@ -40,35 +45,26 @@ public class LoginActivity extends AppCompatActivity {
         auth = FirebaseAuth.getInstance();
         currentUser = auth.getCurrentUser();
         binding.btnRegistar.setVisibility(View.GONE);
-        binding.etName.setVisibility(View.GONE);
-        binding.img.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(Intent.ACTION_PICK,
-                        MediaStore.Images.Media.INTERNAL_CONTENT_URI);
-                startActivityForResult(intent,3);
 
-            }
-        });
-//        UserProfileChangeRequest profileChangeRequest=new UserProfileChangeRequest.Builder()
-//                .setDisplayName(binding.etName.getText().toString())
-//                .setPhotoUri()
-//                .build();
-//        if(currentUser !=null){
-//            startActivity(new Intent(getApplicationContext(),MainActivity.class));
-//        }
+      //  binding.img.setImageURI(currentUser.getPhotoUrl());
+
+
+        if(currentUser !=null){
+            startActivity(new Intent(getApplicationContext(),MainActivity.class));
+        }
         binding.tvRegistar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 binding.btnLogin.setVisibility(View.GONE);
                 binding.btnRegistar.setVisibility(View.VISIBLE);
-                binding.etName.setVisibility(View.VISIBLE);
             }
         });
         binding.btnRegistar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 register();
+
+
             }
         });
 
@@ -77,6 +73,7 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View v) {
                 login();
             }
+
         });
     }
 
@@ -93,6 +90,7 @@ public class LoginActivity extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             Log.d("LoginActivity", task.getResult().getUser().toString());
                             startActivity(new Intent(getApplicationContext(), ExpressionActivity.class));
+                            finish();
                         } else {
                             Log.d("LoginActivity", task.getException().getMessage());
                             Toast.makeText(getApplicationContext(), task.getException().getMessage(), Toast.LENGTH_SHORT).show();
@@ -113,7 +111,8 @@ public class LoginActivity extends AppCompatActivity {
                         // try {
                         if (task.isSuccessful()) {
                             Log.d("LoginActivity", task.getResult().getUser().toString());
-                            startActivity(new Intent(getApplicationContext(), ExpressionActivity.class));
+                           binding.btnRegistar.setVisibility(View.GONE);
+                           binding.btnLogin.setVisibility(View.VISIBLE);
 
                         } else {
                             Log.d("LoginActivity", task.getException().getMessage());
@@ -128,12 +127,5 @@ public class LoginActivity extends AppCompatActivity {
                 });
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
 
-        if (requestCode==RESULT_OK&&data !=null){
-            Uri selectedImage=data.getData();
-            binding.img.setImageURI(selectedImage);
-        }
-    }
 }
